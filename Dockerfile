@@ -1,17 +1,13 @@
-FROM maven:3.8.4-jdk-8 AS build
-
-COPY src /app/src
-COPY pom.xml /app
-
+# Build stage
+FROM maven:3.8.8-eclipse-temurin-17 AS build
 WORKDIR /app
-RUN mvn clean install
+COPY pom.xml .
+COPY src ./src
+RUN mvn -DskipTests=true clean package
 
-FROM openjdk:8-jre-alpine
-
-COPY --from=build /app/target/spring-boot-2-hello-world-1.0.2-SNAPSHOT.jar /app/app.jar
-
+# Runtime stage
+FROM eclipse-temurin:17-jre-alpine
 WORKDIR /app
-
+COPY --from=build /app/target/spring-boot-2-hello-world-1.0.2-SNAPSHOT.jar app.jar
 EXPOSE 8080
-
-CMD ["java", "-jar", "app.jar"]
+ENTRYPOINT ["java", "-jar", "app.jar"]

@@ -2,12 +2,31 @@
 
 **A simple Spring Boot 2.x app to send hello world message to a user**
 
+## Dockerizing a Spring Boot Application
+This tutorial will guide you through the steps to dockerize a Spring Boot application, including creating a Dockerfile, building the Docker
+
+Step 1: Build the Application<br/>
+- 1.1 Package the Application<br/>
+- **Maven** <br/>
+  ```mvn -DskipTests=true clean package```
+
+Step 2: Build the Docker Image<br/>
+- 2.1 Build the Image<br/>
+```docker build -t spring-hello-world-docker .```
+
+Step 3: Run the Docker Container<br/>
+- 3.1 Run the Container<br/>
+```docker run -p 8080:8080 spring-hello-world-docker```
+
+Step 4: Test the Application<br/>
+- 4.1 Access the Application<br/>
+  Open your browser and navigate to ```http://localhost:8080/hello```. You should see the following response:
+
 ## How to Run Application
 
 **Start the application using any of the commands mentioned below**
 
 > **Note:** First two commands need to run inside the root folder of this project i.e inside the **spring-boot-hello-world** folder
-
 
 - **Using maven** <br/>``` mvn spring-boot:run```
 
@@ -19,7 +38,7 @@
 
 - **Directly from IDE**
   <br/>```Right click on HelloWorldApplication.java and click on 'Run' option```
-  <br/><br/>
+  <br/>```Set Bind Port: 8080:8080```<br/>
 
 > **Note:** By default spring boot application starts on port number 8080. If port 8080 is occupied in your system then you can change the port number by uncommenting and updating the **server.port** property inside the **application.properties** file that is available inside the **src > main > resources** folder.
 
